@@ -1,7 +1,18 @@
 import pytest
+from screenpy.pacing import the_narrator
+from screenpy_adapter_allure import AllureAdapter
+from screenpy.narration.adapters.stdout_adapter import StdOutAdapter
 
 
-pytest_plugins = ['configs.driver_config']
+pytest_plugins = ['configs.actor_config', 'configs.driver_config']
+
+the_narrator.attach_adapter(AllureAdapter())
+the_narrator.attach_adapter(StdOutAdapter())
+
+
+@pytest.fixture
+def env(request):
+    return request.config.option.env
 
 
 def pytest_addoption(parser):
