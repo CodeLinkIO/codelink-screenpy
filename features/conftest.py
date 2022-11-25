@@ -4,6 +4,11 @@ import pytest
 pytest_plugins = ['configs.driver_config']
 
 
+@pytest.fixture
+def env(request):
+    return request.config.option.env
+
+
 def pytest_addoption(parser):
     parser.addoption(
         '--browser', action='store', default='chrome',
@@ -20,3 +25,4 @@ def pytest_addoption(parser):
     parser.addoption(
         '--env', action='store', default='default',
         help='The environment to execute the test')
+
