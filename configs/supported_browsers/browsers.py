@@ -1,7 +1,7 @@
-from globals import constants
-from selenium.webdriver.chrome.service import Service as ChromeService
 from seleniumwire import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+from globals import constants
 
 
 class Browser:
