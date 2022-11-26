@@ -1,0 +1,8 @@
+{
+  "default": {
+    "base_url": "https://google.com"
+  },
+  "int": {
+    "base_url": "https://www.google.com"
+  }
+}
