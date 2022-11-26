@@ -1,3 +1,3 @@
 class BasePage:
-    def __init__(self, env):
-        self.env = env
+    def __init__(self, url):
+        self.url = url

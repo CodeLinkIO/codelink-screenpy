@@ -1,7 +1,8 @@
-import pytest
+from pytest import fixture
 
 
 class BaseTest:
-    @pytest.fixture(autouse=True)
-    def injector(self, env):
+    @fixture(autouse=True)
+    def injector(self, env, pages):
         self.env = env
+        self.pages = pages

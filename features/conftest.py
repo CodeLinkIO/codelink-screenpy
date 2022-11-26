@@ -1,7 +1,10 @@
-import pytest
+from pytest import fixture
 from screenpy.pacing import the_narrator
 from screenpy_adapter_allure import AllureAdapter
 from screenpy.narration.adapters.stdout_adapter import StdOutAdapter
+
+from globals.constants import ENVIRONMENTS_FILE_PATH
+from utils.json_reader import read_file, get_value_or_default
 
 
 pytest_plugins = ['configs.actor_config', 'configs.driver_config', 'ui.page_provider']
@@ -10,14 +13,14 @@ the_narrator.attach_adapter(AllureAdapter())
 the_narrator.attach_adapter(StdOutAdapter())
 
 
-@pytest.fixture
+@fixture
 def env(request):
-    return request.config.option.env
+    return request.config.option.env or 'default'
 
 
-@pytest.fixture
-def env(request):
-    return request.config.option.env
+@fixture
+def env_data(env):
+    return read_file(ENVIRONMENTS_FILE_PATH)
 
 
 def pytest_addoption(parser):

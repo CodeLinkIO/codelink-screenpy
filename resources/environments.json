@@ -1,8 +1,11 @@
 {
   "default": {
-    "base_url": "https://itviec.com"
+    "base_url": "https://itviec.com/",
+    "paths": {
+      "companies": "companies/{company_name}"
+    }
   },
   "int": {
-    "base_url": "https://www.itviec.com"
+    "base_url": "https://www.itviec.com/"
   }
 }
