@@ -1,8 +1,8 @@
 {
   "default": {
-    "base_url": "https://google.com"
+    "base_url": "https://itviec.com"
   },
   "int": {
-    "base_url": "https://www.google.com"
+    "base_url": "https://www.itviec.com"
   }
 }

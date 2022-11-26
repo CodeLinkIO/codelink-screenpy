@@ -4,7 +4,7 @@ from screenpy_adapter_allure import AllureAdapter
 from screenpy.narration.adapters.stdout_adapter import StdOutAdapter
 
 
-pytest_plugins = ['configs.actor_config', 'configs.driver_config']
+pytest_plugins = ['configs.actor_config', 'configs.driver_config', 'ui.page_provider']
 
 the_narrator.attach_adapter(AllureAdapter())
 the_narrator.attach_adapter(StdOutAdapter())

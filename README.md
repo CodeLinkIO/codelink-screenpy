@@ -1,6 +1,6 @@
 # CodeLink Automation Test
 
-The Voltron Automation Test project allows automating regression test cases for UI and API.
+The Automation Test project allows automating regression test cases for UI and API.
 
 ## Table of Content
 
