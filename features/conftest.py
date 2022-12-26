@@ -7,7 +7,7 @@ from globals.constants import ENVIRONMENTS_FILE_PATH
 from utils.json_reader import read_file, get_value_or_default
 
 
-pytest_plugins = ['configs.actor_config', 'configs.driver_config', 'ui.page_provider']
+pytest_plugins = ['configs.actor_config', 'configs.driver_config', 'configs.page_provider']
 
 the_narrator.attach_adapter(AllureAdapter())
 the_narrator.attach_adapter(StdOutAdapter())
@@ -39,4 +39,3 @@ def pytest_addoption(parser):
     parser.addoption(
         '--env', action='store', default='default',
         help='The environment to execute the test')
-

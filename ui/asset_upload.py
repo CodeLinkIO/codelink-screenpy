@@ -1,4 +1,4 @@
-from ui.base_page import BasePage
+from ui.base.base_page import BasePage
 
 
 class AssetUploadPage(BasePage):

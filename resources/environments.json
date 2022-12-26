@@ -1,11 +1,26 @@
 {
   "default": {
-    "base_url": "https://itviec.com/",
+    "asset_list_game": "https://codelink-tracker.dev.voltron.ea.com/",
+    "asset_list_non_game": "https://codelink-list.dev.voltron.ea.com/",
+    "youtube_hub": "https://codelink-youtube.dev.voltron.ea.com/",
+    "asset_search": "https://codelink-search.dev.voltron.ea.com/",
+    "asset_upload": "https://codelink-upload.dev.voltron.ea.com/",
+    "juno_hub": "https://codelink-juno.dev.voltron.ea.com/",
+    "photo_shoot_library": "https://codelink-shoot.dev.voltron.ea.com/",
+    "channel_ready_library": "https://codelink-channelready.dev.voltron.ea.com/",
+    "login": "https://codelink-core.dev.voltron.ea.com/nuxeo/login.jsp",
     "paths": {
-      "companies": "companies/{company_name}"
+      "access_denied": "access-denied"
     }
   },
-  "int": {
-    "base_url": "https://www.itviec.com/"
+  "upgrade": {
+    "asset_list_game": "https://upgrade-tracker.dev.voltron.ea.com/",
+    "asset_list_non_game": "https://upgrade-list.dev.voltron.ea.com/",
+    "youtube_hub": "https://upgrade-youtube.dev.voltron.ea.com/",
+    "asset_search": "https://upgrade-search.dev.voltron.ea.com/",
+    "asset_upload": "https://upgrade-upload.dev.voltron.ea.com/",
+    "juno_hub": "https://upgrade-juno.dev.voltron.ea.com/",
+    "photo_shoot_library": "https://upgrade-shoot.dev.voltron.ea.com/",
+    "channel_ready_library": "https://upgrade-channelready.dev.voltron.ea.com/"
   }
 }
