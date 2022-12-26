@@ -32,6 +32,8 @@ py -m venv venv
 pip install -r requirements.txt
 ```
 ### Links
-[Pytest](https://docs.pytest.org/en/7.2.x/contents.html)
+[Pytest](https://docs.pytest.org/en/7.2.x/contents.html) 
+
 [ScreenPy](https://screenpy-docs.readthedocs.io/en/latest/)
+
 [Selenium Python](https://selenium-python.readthedocs.io/)
