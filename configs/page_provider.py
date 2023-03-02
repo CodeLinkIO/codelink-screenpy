@@ -1,14 +1,6 @@
 from pytest import fixture
 
-from ui.asset_list_game import AssetListGamePage
-from ui.asset_list_non_game import AssetListNonGamePage
-from ui.asset_search import AssetSearchPage
-from ui.asset_upload import AssetUploadPage
-from ui.channel_ready_library import ChannelReadyLibraryPage
-from ui.juno_hub import JunoHubPage
-from ui.photo_shoot_library import PhotoShootLibraryPage
-from ui.youtube_hub import YoutubeHubPage
-from ui.login import LoginPage
+from ui import AssetListGamePage, AssetListNonGamePage, AssetSearchPage, AssetUploadPage, ChannelReadyLibraryPage, JunoHubPage, PhotoShootLibraryPage, YoutubeHubPage, LoginPage
 from utils.json_reader import get_value_or_default
 from globals.constants import ASSET_SEARCH, ASSET_UPLOAD, ASSET_LIST_GAME, ASSET_LIST_NON_GAME, PHOTO_SHOOT_LIBRARY, CHANNEL_READY_LIBRARY, JUNO_HUB, YOUTUBE_HUB
 
