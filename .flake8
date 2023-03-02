@@ -1,0 +1,5 @@
+[flake8]
+ignore = E501
+exclude = venv
+max-line-length = 100
+import-order-style = pep8
