@@ -24,10 +24,11 @@ class TestFilterSearchFavoriteAndAddBeatInAssetTrackerGame(BaseTest):
         when(the_qa_engineer_2).attempts_to(
             Login('chivu', '123456'),
             # Clear default filters
-            Filter(FilterType.SHOW_ONLY_ACTIVE_TITLES, num_active_filters=1),
-            Filter(FilterType.SHOW_ONLY_EA_TITLES, num_active_filters=0),
-            # # Turn On Show Only Active Titles Filter
-            Filter(FilterType.SHOW_ONLY_ACTIVE_TITLES, num_active_filters=1)
+            Filter(FilterType.SHOW_ONLY_ACTIVE_TITLES, disabled=True),
+            Filter(FilterType.SHOW_ONLY_EA_TITLES, disabled=True),
+            Filter(FilterType.SHOW_ADDITIONAL_CONTENT, disabled=True),
+            # Turn On Show Only Active Titles Filter
+            Filter(FilterType.SHOW_ONLY_ACTIVE_TITLES)
         )
         then(the_qa_engineer_2).should(
             See.the(AssetListData(AssetLevel.FRANCHISE, len(self.ACTIVE_FRANCHISES)),
@@ -35,7 +36,7 @@ class TestFilterSearchFavoriteAndAddBeatInAssetTrackerGame(BaseTest):
         )
         # Turn Off Show Only Active Titles Filter
         when(the_qa_engineer_2).attempts_to(
-            Filter(FilterType.SHOW_ONLY_ACTIVE_TITLES, num_active_filters=0)
+            Filter(FilterType.SHOW_ONLY_ACTIVE_TITLES, disabled=True)
         )
         then(the_qa_engineer_2).should(
             See.the(AssetListData(AssetLevel.FRANCHISE, len(self.ALL_FRANCHISES)),
@@ -43,7 +44,7 @@ class TestFilterSearchFavoriteAndAddBeatInAssetTrackerGame(BaseTest):
         )
         # Turn On Show Only EA Titles Filter
         when(the_qa_engineer_2).attempts_to(
-            Filter(FilterType.SHOW_ONLY_EA_TITLES, num_active_filters=1)
+            Filter(FilterType.SHOW_ONLY_EA_TITLES)
         )
         then(the_qa_engineer_2).should(
             See.the(AssetListData(AssetLevel.FRANCHISE, len(self.EA_FRANCHISES)),
@@ -51,7 +52,7 @@ class TestFilterSearchFavoriteAndAddBeatInAssetTrackerGame(BaseTest):
         )
         # Turn Off Show Only EA Titles Filter
         when(the_qa_engineer_2).attempts_to(
-            Filter(FilterType.SHOW_ONLY_EA_TITLES, num_active_filters=0)
+            Filter(FilterType.SHOW_ONLY_EA_TITLES, disabled=True)
         )
         then(the_qa_engineer_2).should(
             See.the(AssetListData(AssetLevel.FRANCHISE, len(self.ALL_FRANCHISES)),
@@ -59,7 +60,7 @@ class TestFilterSearchFavoriteAndAddBeatInAssetTrackerGame(BaseTest):
         )
         # Turn On Show Additional Content Filter
         when(the_qa_engineer_2).attempts_to(
-            Filter(FilterType.SHOW_ADDITIONAL_CONTENT, num_active_filters=1)
+            Filter(FilterType.SHOW_ADDITIONAL_CONTENT)
         )
         then(the_qa_engineer_2).should(
             See.the(AssetListData(AssetLevel.FRANCHISE, len(self.ALL_FRANCHISES)),
@@ -67,7 +68,7 @@ class TestFilterSearchFavoriteAndAddBeatInAssetTrackerGame(BaseTest):
         )
         # Turn Off Show Additional Content Filter
         when(the_qa_engineer_2).attempts_to(
-            Filter(FilterType.SHOW_ADDITIONAL_CONTENT, num_active_filters=0)
+            Filter(FilterType.SHOW_ADDITIONAL_CONTENT, disabled=True)
         )
         then(the_qa_engineer_2).should(
             See.the(AssetListData(AssetLevel.FRANCHISE, len(self.ALL_FRANCHISES)),

@@ -2,7 +2,7 @@ from enum import Enum
 
 from screenpy import Actor
 from screenpy.pacing import beat
-from screenpy_selenium.actions import Wait, Click
+from screenpy_selenium.actions import Click
 
 from actions import WaitClick
 from ui import AssetListGamePage
@@ -25,17 +25,26 @@ class Filter:
     def __init__(
             self,
             filter_type: FilterType,
-            num_active_filters: int
+            disabled: bool = False
     ):
         self.filter_type = filter_type
         self.filter_type_value = filter_type.value
-        self.num_active_filters = num_active_filters
+        self.disabled = disabled
+
+    def set_filter(self, the_actor: Actor):
+        toggle = self.FILTER_ELEMENTS_MAPPING.get(self.filter_type).found_by(the_actor)
+        is_toggle_enabled = "75" in toggle.value_of_css_property("background-color")
+        if is_toggle_enabled == self.disabled:
+            the_actor.attempts_to(
+                Click.on_the(self.FILTER_ELEMENTS_MAPPING.get(self.filter_type))
+            )
 
     @beat("{} clicks on '{filter_type_value}' toggle.")
     def perform_as(self, the_actor: Actor) -> None:
         the_actor.attempts_to(
-            WaitClick(AssetListGamePage.MASTER_FILTER),
-            Click.on_the(self.FILTER_ELEMENTS_MAPPING.get(self.filter_type)),
-            Wait.for_the(AssetListGamePage.get_num_filters_enabled_label(self.num_active_filters)),
+            WaitClick(AssetListGamePage.MASTER_FILTER)
+        )
+        self.set_filter(the_actor)
+        the_actor.attempts_to(
             Click.on_the(AssetListGamePage.MASTER_FILTER)
         )
