@@ -1,7 +1,7 @@
 from screenpy import Actor
 from screenpy.pacing import beat
 
-from actions.wait_click import WaitClick
+from actions import WaitClick
 from ui import AssetListGamePage
 
 
