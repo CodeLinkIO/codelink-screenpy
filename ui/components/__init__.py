@@ -1,5 +1,5 @@
-from .toast_message import ToastMessage
+from .toast_message import ToastMessageAlert
 
 __all__ = [
-    "ToastMessage"
+    "ToastMessageAlert"
 ]
