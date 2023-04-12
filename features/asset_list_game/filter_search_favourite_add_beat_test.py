@@ -5,74 +5,104 @@ from screenpy.actions import See
 from screenpy.resolutions import ReadsExactly, IsEqual
 from screenpy_selenium.actions import Open
 
-from enums.asset_level import AssetLevel
+from libraries.api_client import ApiClient
 from tasks import Login, CloseToastMessage
 from tasks.asset_list_game import AddBeat, EditBeat, ExpandTitle, FavouriteFranchise, FavouriteTitle, Filter, FilterType, SetDefaultLocales, Search
 from questions import ToastMessage
-from questions.asset_list_game import AssetListData, FavouriteAssetListData
+from questions.asset_list_game import AssetListGameHomePageData, AssetListGameFavouriteSection
 from features.base_test import BaseTest
 
 
 class TestFilterSearchFavoriteAndAddBeatInAssetTrackerGame(BaseTest):
 
-    ALL_FRANCHISES = ['A Plague Tale Innocence', 'A Way Out', 'Alice', 'Anthem', 'Ao Tennis', 'Apex Legends', 'Apotheon', 'Aragami', 'Autonauts', 'Batman: Arkham', 'Battlefield', 'Beholder', 'Bejeweled', 'Blackguards', 'Bloodstained', 'Bomber Crew', 'Breathedge', 'Burnout', 'Cities Skylines', 'Command & Conquer', 'Content Hub Playground', 'Cosmic Star Heroine', 'Crashlands', 'Crawl', 'Cryptark', 'Crysis', 'Darksiders', 'Dead Cells', 'Dead In Vinland', 'Dead Space', 'Dear Esther', 'Deponia', 'Detention', 'Dillan', 'Diluvion', 'Dragon Age', 'Dungeon Keeper', 'Dungeons', 'Dungeons of Dredmor', 'Epistory', 'Farmers Dynasty', 'Farming Simulator', 'Fe', 'FIFA', 'Figment', 'Final Fantasy', 'For The King', 'Fran Bow', 'Frostpunk', 'FTL: Faster Than Light', 'Furi', 'Ghost Of A Tale', 'Gone Home', 'Hacknet', 'Halcyon 6', 'Hand of Fate', 'Highway Fixture', 'Home Behind', 'Hover', 'Hue', 'Hyper Light Drifter', 'Inside', 'Into The Breach', 'It Takes Two', 'Jade Empire', 'Judgment: Apocalypse Survival Simulation', 'Kingdom', 'Kingdoms of Amalur: Reckoning', 'Lego Star Wars', 'Legrand Legacy', 'Limbo', 'Little Misfortune', 'Lost Castle', 'Mable And The Wood', 'Mad Games Tycoon', 'Mad Max', 'Madden', 'Mass Effect', 'Medal of Honor', 'Mini Metro', 'Mirrors Edge', 'Moonlighter', 'Mr. Shifty', 'Mugsters', 'Mutant Year Zero: Road to Eden', 'Need for Speed', 'Nex Machina', 'Northgard', 'Nox', 'Opus Magnum', 'Out of the Park Baseball', 'Overcooked', 'Oxenfree', 'Peggle', 'Plants vs Zombies', 'Pony Island', 'Prison Architect', 'Project Highrise', 'Punch Club', 'Pyre', 'Rebel Galaxy', 'Renowned Explorers', 'Rime', 'Rocket Arena', 'Saboteur', 'Samorost', 'Sea of Solitude', 'Seasons After Fall', 'Shadow Tactics', 'Shantae', 'Shenzhen I/O', 'Shift', 'Shio', 'SimCity', 'Sinner: Sacrifice for Redemption', 'Slay The Spire', 'Slime-san', 'Snake Pass', 'Sparklite', 'Splasher', 'Spore', 'Star Wars', 'Star Wars Episode I: Racer', 'Star Wars: Battlefront Classic', 'Star Wars: Empire at War', 'Star Wars: Galactic Battlegrounds', 'Star Wars: Jedi Knight', 'Star Wars: Knights of the Old Republic', 'Star Wars: Rebel Assault', 'Star Wars: Rebellion', 'Star Wars: Republic Commando', 'Star Wars: Rogue Squadron 3D', 'Star Wars: Shadows of the Empire', 'Star Wars: Squadrons', 'Star Wars: Starfighter', 'Star Wars: The Force Unleashed', 'Star Wars: X-Wing', 'Stealth Bastard', 'SteamWorld', 'Sudden Strike', 'Superbowl', 'Superhot', 'Tacoma', 'Tharsis', "The Bard's Tale", 'The Book of Unwritten Tales', 'The Count Lucanor', 'The Escapists', 'The Flame in the Flood', 'The Invisible Hours', 'The Lego Movie', 'The Pillars of the Earth', 'The Sexy Brutale', 'The Sims', 'The Solus Project', 'The Surge', 'Theme Hospital', 'They Are Billions', 'This is the Police', 'This War of Mine', 'Titanfall', 'Torchlight', 'Trine', 'Tropico', 'Turmoil', 'Ultimate Chicken Horse', 'Unravel', 'Vambrace: Cold Soul', 'Vampyr', 'Voltron', 'Warhammer 40000', 'Warhammer: Chaosbane', 'Witcher', 'Worms', 'Wreckfest', 'Wuppo', "Yoku's Island Express", 'Yooka-Laylee', 'Zuma']
-    ACTIVE_FRANCHISES = ['A Plague Tale Innocence', 'Battlefield', 'Command & Conquer', 'Content Hub Playground', 'Dead Space', 'Dillan', 'Dragon Age', 'FIFA', 'Madden', 'Rocket Arena', 'Star Wars', 'Superbowl', 'Voltron']
-    EA_FRANCHISES = ['A Plague Tale Innocence', 'A Way Out', 'Alice', 'Anthem', 'Apex Legends', 'Batman: Arkham', 'Battlefield', 'Bejeweled', 'Burnout', 'Cities Skylines', 'Command & Conquer', 'Crysis', 'Dead Space', 'Dragon Age', 'Dungeon Keeper', 'Fe', 'FIFA', 'It Takes Two', 'Kingdoms of Amalur: Reckoning', 'Madden', 'Mass Effect', 'Medal of Honor', 'Mirrors Edge', 'Need for Speed', 'Peggle', 'Plants vs Zombies', 'Rocket Arena', 'Sea of Solitude', 'SimCity', 'Spore', 'Star Wars', 'Star Wars: Battlefront Classic', 'Star Wars: Knights of the Old Republic', 'Star Wars: Squadrons', 'Star Wars: The Force Unleashed', 'The Sims', 'Titanfall', 'Unravel', 'Voltron', 'Wreckfest', 'Zuma']
+    @staticmethod
+    def fetch_franchises_data(
+            franchises: list,
+            titles: list,
+            only_active_titles: bool = False,
+            only_ea_titles: bool = False,
+            additional_content: bool = False
+    ):
+        desired_franchise_ids = []
+        if only_active_titles:
+            desired_franchise_ids += set([item['franchiseId'] for item in titles if item['isActive']])
+        if only_ea_titles:
+            desired_franchise_ids += set([item['franchiseId'] for item in titles if item['isEAGame']])
+        if additional_content:
+            desired_franchise_ids += set([item['franchiseId'] for item in titles if item['gameObjectType'] == 'base-game'])
+        if desired_franchise_ids:
+            desired_franchises = list(filter(lambda franchise: franchise['id'] in set(desired_franchise_ids), franchises))
+        else:
+            valid_franchise_ids = set([item['franchiseId'] for item in titles])
+            desired_franchises = [item for item in franchises if item['id'] in valid_franchise_ids]
+        return [item['name'] for item in desired_franchises]
 
     def test_filter_search_favourite_and_add_beat(self, the_qa_engineer_2: AnActor):
-        given(the_qa_engineer_2).attempts_to(Open.their_browser_on(self.pages['ASSET_LIST_GAME_PAGE'].url))
+        base_url = self.pages['ASSET_LIST_GAME_PAGE'].url
+        api = ApiClient(the_qa_engineer_2, base_url)
+        given(the_qa_engineer_2).attempts_to(Open.their_browser_on(base_url))
         when(the_qa_engineer_2).attempts_to(
-            Login('chivu', '123456'),
-            # Clear default filters
+            Login('chivu', '123456')
+        )
+        franchises = api.wait_for_franchises_es_request().get('franchises')
+        titles = api.wait_for_titles_es_request().get('titles')
+        all_franchises = sorted(self.fetch_franchises_data(franchises, titles))
+        active_franchises = sorted(self.fetch_franchises_data(franchises, titles, only_active_titles=True))
+        ea_franchises = sorted(self.fetch_franchises_data(franchises, titles, only_ea_titles=True))
+        additional_content_franchises = sorted(self.fetch_franchises_data(franchises, titles, additional_content=True))
+        # Clear default filters
+        when(the_qa_engineer_2).attempts_to(
             Filter(FilterType.SHOW_ONLY_ACTIVE_TITLES, disabled=True),
             Filter(FilterType.SHOW_ONLY_EA_TITLES, disabled=True),
-            Filter(FilterType.SHOW_ADDITIONAL_CONTENT, disabled=True),
-            # Turn On Show Only Active Titles Filter
+            Filter(FilterType.SHOW_ADDITIONAL_CONTENT, disabled=True)
+        )
+        # Turn On Show Only Active Titles Filter
+        when(the_qa_engineer_2).attempts_to(
             Filter(FilterType.SHOW_ONLY_ACTIVE_TITLES)
         )
         then(the_qa_engineer_2).should(
-            See.the(AssetListData(AssetLevel.FRANCHISE, len(self.ACTIVE_FRANCHISES)),
-                    IsEqual(self.ACTIVE_FRANCHISES))
+            See.the(AssetListGameHomePageData("franchise", len(active_franchises)),
+                    IsEqual(active_franchises))
         )
         # Turn Off Show Only Active Titles Filter
         when(the_qa_engineer_2).attempts_to(
             Filter(FilterType.SHOW_ONLY_ACTIVE_TITLES, disabled=True)
         )
         then(the_qa_engineer_2).should(
-            See.the(AssetListData(AssetLevel.FRANCHISE, len(self.ALL_FRANCHISES)),
-                    IsEqual(self.ALL_FRANCHISES))
+            See.the(AssetListGameHomePageData("franchise", len(all_franchises)),
+                    IsEqual(all_franchises))
         )
         # Turn On Show Only EA Titles Filter
         when(the_qa_engineer_2).attempts_to(
             Filter(FilterType.SHOW_ONLY_EA_TITLES)
         )
         then(the_qa_engineer_2).should(
-            See.the(AssetListData(AssetLevel.FRANCHISE, len(self.EA_FRANCHISES)),
-                    IsEqual(self.EA_FRANCHISES))
+            See.the(AssetListGameHomePageData("franchise", len(ea_franchises)),
+                    IsEqual(ea_franchises))
         )
         # Turn Off Show Only EA Titles Filter
         when(the_qa_engineer_2).attempts_to(
             Filter(FilterType.SHOW_ONLY_EA_TITLES, disabled=True)
         )
         then(the_qa_engineer_2).should(
-            See.the(AssetListData(AssetLevel.FRANCHISE, len(self.ALL_FRANCHISES)),
-                    IsEqual(self.ALL_FRANCHISES))
+            See.the(AssetListGameHomePageData("franchise", len(all_franchises)),
+                    IsEqual(all_franchises))
         )
         # Turn On Show Additional Content Filter
         when(the_qa_engineer_2).attempts_to(
             Filter(FilterType.SHOW_ADDITIONAL_CONTENT)
         )
         then(the_qa_engineer_2).should(
-            See.the(AssetListData(AssetLevel.FRANCHISE, len(self.ALL_FRANCHISES)),
-                    IsEqual(self.ALL_FRANCHISES))
+            See.the(AssetListGameHomePageData("franchise", len(additional_content_franchises)),
+                    IsEqual(additional_content_franchises))
         )
         # Turn Off Show Additional Content Filter
         when(the_qa_engineer_2).attempts_to(
             Filter(FilterType.SHOW_ADDITIONAL_CONTENT, disabled=True)
         )
         then(the_qa_engineer_2).should(
-            See.the(AssetListData(AssetLevel.FRANCHISE, len(self.ALL_FRANCHISES)),
-                    IsEqual(self.ALL_FRANCHISES))
+            See.the(AssetListGameHomePageData("franchise", len(all_franchises)),
+                    IsEqual(all_franchises))
         )
         # Search Franchise and Favourite
         franchise_name = "Dillan"
@@ -81,7 +111,7 @@ class TestFilterSearchFavoriteAndAddBeatInAssetTrackerGame(BaseTest):
             FavouriteFranchise(franchise_name)
         )
         then(the_qa_engineer_2).should(
-            See.the(FavouriteAssetListData(AssetLevel.FRANCHISE),
+            See.the(AssetListGameFavouriteSection("franchise"),
                     IsEqual([franchise_name]))
         )
         # Search Title and Favourite
@@ -91,7 +121,7 @@ class TestFilterSearchFavoriteAndAddBeatInAssetTrackerGame(BaseTest):
             FavouriteTitle(title)
         )
         then(the_qa_engineer_2).should(
-            See.the(FavouriteAssetListData(AssetLevel.TITLE),
+            See.the(AssetListGameFavouriteSection("title"),
                     IsEqual([title]))
         )
         # Search Title and Set Default Locales
@@ -100,7 +130,7 @@ class TestFilterSearchFavoriteAndAddBeatInAssetTrackerGame(BaseTest):
             Search(title)
         )
         then(the_qa_engineer_2).should(
-            See.the(AssetListData(AssetLevel.TITLE, num_records=1),
+            See.the(AssetListGameHomePageData("title", num_records=1),
                     IsEqual([title]))
         )
         when(the_qa_engineer_2).attempts_to(

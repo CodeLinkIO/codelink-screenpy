@@ -1,7 +1,7 @@
-from .asset_list_data import AssetListData
-from .favourite_asset_list_data import FavouriteAssetListData
+from .asset_list_game_home_page_data import AssetListGameHomePageData
+from .asset_list_game_favourite_section import AssetListGameFavouriteSection
 
 __all__ = [
-    "AssetListData",
-    "FavouriteAssetListData"
+    "AssetListGameHomePageData",
+    "AssetListGameFavouriteSection"
 ]

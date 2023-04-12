@@ -6,18 +6,16 @@ from screenpy_selenium import Target
 from screenpy.pacing import beat
 from selenium.common import StaleElementReferenceException
 
-from enums.asset_level import AssetLevel
 from ui.asset_list_game import AssetListGamePage
 
 
-class FavouriteAssetListData:
+class AssetListGameFavouriteSection:
 
     def __init__(
             self,
-            asset_level: AssetLevel
+            type: str
     ) -> None:
-        self.asset_level = asset_level
-        self.asset_value = asset_level.value
+        self.type = type
 
     @staticmethod
     @retry(StaleElementReferenceException, tries=3, delay=1)
@@ -30,10 +28,10 @@ class FavouriteAssetListData:
             data.append(element.text)
         return data
 
-    @beat('{} examines the favourite {asset_value}s section on Assets List Game')
+    @beat('{} examines the favourite {type}s section on Assets List Game')
     def answered_by(self, the_actor: Actor) -> typing.List[str]:
-        if self.asset_level == AssetLevel.FRANCHISE:
+        if self.type == "franchise":
             return self.get_favourite_area_data(AssetListGamePage.FAVOURITE_FRANCHISE_NAME, the_actor)
-        elif self.asset_level == AssetLevel.TITLE:
+        elif self.type == "title":
             return self.get_favourite_area_data(AssetListGamePage.FAVOURITE_TITLE_NAME, the_actor)
         raise AttributeError("Only Favourite Franchises and Favourite Titles supported")
