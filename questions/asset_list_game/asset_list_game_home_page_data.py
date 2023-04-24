@@ -11,7 +11,7 @@ from ui.asset_list_game import AssetListGamePage
 class AssetListGameHomePageData:
 
     TIMEOUT = 10
-    ASSETS_LEVEL_ELEMENTS_MAPPING = {
+    TYPE_ELEMENTS_MAPPING = {
         "franchise": AssetListGamePage.FRANCHISE_NAME,
         "title": AssetListGamePage.TITLE_NAME,
         "beat": AssetListGamePage.BEAT_NAME
@@ -32,7 +32,7 @@ class AssetListGameHomePageData:
             the_actor: Actor
     ) -> list:
         data = []
-        for element in self.ASSETS_LEVEL_ELEMENTS_MAPPING.get(self.type).all_found_by(the_actor):
+        for element in self.TYPE_ELEMENTS_MAPPING.get(self.type).all_found_by(the_actor):
             data.append(element.text)
         return sorted(data)
 
@@ -40,7 +40,7 @@ class AssetListGameHomePageData:
     def answered_by(self, the_actor: Actor):
         end_time = time.time() + self.TIMEOUT
         while time.time() <= end_time:
-            self.actual_records = len(self.ASSETS_LEVEL_ELEMENTS_MAPPING.get(self.type).all_found_by(the_actor))
+            self.actual_records = len(self.TYPE_ELEMENTS_MAPPING.get(self.type).all_found_by(the_actor))
             if self.actual_records == self.num_records:
                 return self.get_assets_list_data(the_actor)
             time.sleep(0.5)
