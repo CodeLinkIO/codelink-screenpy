@@ -30,6 +30,7 @@ class Filter:
         self.filter_type = filter_type
         self.filter_type_value = filter_type.value
         self.disabled = disabled
+        self.filter_value = "disabled" if self.disabled else "enabled"
 
     def set_filter(self, the_actor: Actor):
         toggle = self.FILTER_ELEMENTS_MAPPING.get(self.filter_type).found_by(the_actor)
@@ -39,7 +40,7 @@ class Filter:
                 Click.on_the(self.FILTER_ELEMENTS_MAPPING.get(self.filter_type))
             )
 
-    @beat("{} clicks on '{filter_type_value}' toggle.")
+    @beat("{} filters '{filter_type_value}' as {filter_value}.")
     def perform_as(self, the_actor: Actor) -> None:
         the_actor.attempts_to(
             WaitClick(AssetListGamePage.MASTER_FILTER)

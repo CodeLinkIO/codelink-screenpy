@@ -88,8 +88,8 @@ class TestFilterSearchFavoriteAndAddBeatInAssetTrackerGame(BaseTest):
             Filter(FilterType.SHOW_ADDITIONAL_CONTENT, disabled=True)
         )
         then(the_qa_engineer_2).should(
-            See.the(AssetListGameHomePageData("franchise", len(noted_under("ea_franchises"))),
-                    IsEqual(noted_under("ea_franchises")))
+            See.the(AssetListGameHomePageData("franchise", len(noted_under("all_franchises"))),
+                    IsEqual(noted_under("all_franchises")))
         )
         # Search Franchise and Favourite
         franchise_name = "Dillan"
