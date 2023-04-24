@@ -2,16 +2,12 @@ import json
 import traceback
 import logging
 import requests
-import gzip
-import io
 from requests_toolbelt.utils import dump
 
-from screenpy import AnActor
-from screenpy_selenium.abilities import BrowseTheWeb
+from screenpy import Actor
 
 from .response import ApiResponse
 from .exceptions import ApiClientError
-from .routes import Routes
 from utils.json_encoder import json_dump
 
 
@@ -24,8 +20,8 @@ class ApiClient:
 
     def __init__(
             self,
-            the_actor: AnActor,
-            base_url: str,
+            the_actor: Actor,
+            base_url: str = None,
     ):
         self.base_url = base_url
         self.the_actor = the_actor
@@ -80,16 +76,3 @@ class ApiClient:
 
     def post(self, path: str, params: dict = None):
         return self._request('post', path, data=json_dump(params))
-
-    def wait_for_request(self, path: str, timeout: int = DEFAULT_TIMEOUT) -> dict:
-        driver = self.the_actor.ability_to(BrowseTheWeb).browser
-        request = driver.wait_for_request(path, timeout)
-        buf = io.BytesIO(request.response.body)
-        gzip_f = gzip.GzipFile(fileobj=buf)
-        return json.loads(gzip_f.read().decode("utf-8"))
-
-    def wait_for_franchises_es_request(self) -> dict:
-        return self.wait_for_request(Routes.FRANCHISES_ES)
-
-    def wait_for_titles_es_request(self) -> dict:
-        return self.wait_for_request(Routes.TITLES_ES)
