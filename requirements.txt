@@ -1,3 +1,7 @@
 selenium_wire==5.1.0
 webdriver_manager==3.8.5
 screenpy[selenium,allure]==4.0.2
+flake8==3.9.2
+selenium==4.4.3
+pytest==7.2.1
+retry==0.9.2

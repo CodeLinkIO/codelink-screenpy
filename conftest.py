@@ -4,7 +4,7 @@ from screenpy_adapter_allure import AllureAdapter
 from screenpy.narration.adapters.stdout_adapter import StdOutAdapter
 
 from globals.constants import ENVIRONMENTS_FILE_PATH
-from utils.json_reader import read_file, get_value_or_default
+from utils.json_reader import read_file
 
 
 pytest_plugins = ['configs.actor_config', 'configs.driver_config', 'configs.page_provider']
