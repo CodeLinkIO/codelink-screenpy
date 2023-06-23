@@ -112,9 +112,6 @@ class GetMasterAssetsWithYouTubeVersion:
     def answered_by(self, the_actor: Actor):
         parent_ids = self.get_parent_ids_version_assets_with_youtube_channel(the_actor)
         master_assets_with_youtube_version = self.get_master_assets_info(parent_ids, the_actor)
-        import logging
-        logging.warning(f"parent_ids is: {parent_ids}")
-        logging.warning(f"master_assets_with_youtube_version is: {master_assets_with_youtube_version}")
         if self.sorted_by:
             return sorted(master_assets_with_youtube_version, key=lambda d: d[self.sorted_by])
         return master_assets_with_youtube_version

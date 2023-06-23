@@ -80,8 +80,6 @@ class MasterAssetTableData(BaseQuestions):
         bottom_reached = False
         i = 0
         while not bottom_reached:
-            import logging
-            logging.warning(i)
             target = YoutubeHubPage.get_master_asset_table_row(i)
             try:
                 target.found_by(the_actor)

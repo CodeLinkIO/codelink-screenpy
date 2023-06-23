@@ -28,11 +28,9 @@ class SortMasterAsset:
     def perform_as(self, the_actor: Actor) -> None:
         driver = the_actor.ability_to(BrowseTheWeb).browser
         column_header_element = YoutubeHubPage.get_master_asset_table_header(self.column.value)
-        import logging
         retries = 0
         while retries < 3:
             actual_sort = column_header_element.found_by(the_actor).get_attribute("aria-sort")
-            logging.warning(f"actual_sort after {actual_sort}")
             if actual_sort != self.sort_value:
                 the_actor.attempts_to(
                     Click.on_the(column_header_element)

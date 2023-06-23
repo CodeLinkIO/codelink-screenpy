@@ -72,9 +72,7 @@ class EditMetadata(BaseTasks):
     def wait_for_validate_button_enabled(the_actor: Actor, timeout: int = 5):
 
         def _is_disabled():
-            import logging
             attributes = MetadataEditPage.VALIDATE_BUTTON.found_by(the_actor).get_attribute('outerHTML')
-            logging.warning(f"disbaled: {attributes}")
             return "disabled" in attributes
         end_time = time.time() + timeout
         while time.time() <= end_time:
