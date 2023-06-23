@@ -1,14 +1,15 @@
 import json
-import traceback
 import logging
+import traceback
+
 import requests
 from requests_toolbelt.utils import dump
-
 from screenpy import Actor
 
-from .response import ApiResponse
-from .exceptions import ApiClientError
 from utils.json_encoder import json_dump
+
+from .exceptions import ApiClientError
+from .response import ApiResponse
 
 
 class ApiClient:
@@ -22,10 +23,12 @@ class ApiClient:
             self,
             the_actor: Actor,
             base_url: str = None,
+            **headers
     ):
         self.base_url = base_url
         self.the_actor = the_actor
-        self.headers = self.DEFAULT_HEADERS
+        self.headers = dict(headers)
+        self.headers.update(self.DEFAULT_HEADERS)
         self.session = None
         self.prepare_session()
 
@@ -74,5 +77,5 @@ class ApiClient:
     def get(self, path: str, params: dict = None):
         return self._request('get', path, params=params)
 
-    def post(self, path: str, params: dict = None):
-        return self._request('post', path, data=json_dump(params))
+    def post(self, path: str, params: dict = None, **kwargs):
+        return self._request('post', path, data=json_dump(params), **kwargs)
