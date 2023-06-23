@@ -1,4 +1,5 @@
 from .attach_master_thumbnail import AttachMasterThumbnail
+from .attach_version_thumbnail import AttachVersionThumbnail
 from .create_new_version_asset import CreateNewVersionAsset
 from .edit_metadata import EditMetadata
 from .extract_youtube_metadata import ExtractYouTubeMetadata
@@ -11,6 +12,7 @@ from .sort_master_asset import SortMasterAsset, SortMasterAssetColumn
 
 __all__ = [
     "AttachMasterThumbnail",
+    "AttachVersionThumbnail",
     "CreateNewVersionAsset",
     "EditMetadata",
     "ExtractYouTubeMetadata",
