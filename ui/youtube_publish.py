@@ -14,8 +14,9 @@ class YoutubePublishPage(BasePage):
 
     # YouTube Version Row
     VERSION_CHECKBOX = Target.the('Version Checkbox').located_by("(//div[contains(@class, 'VersionRow__RowWrapper')])[1]//input[@type='checkbox']")
-    METADATA_LOCALE_DROPDOWN = Target.the('Metadata Locale Dropdown').located_by("(//div[contains(@class, 'VersionRow__RowWrapper')])[1]//div[contains(@class,'VersionRow__InnerCell')][7]//button")
-    YOUTUBE_CHANNELS_DROPDOWN = Target.the('YouTube Channels Dropdown').located_by("(//div[contains(@class, 'VersionRow__RowWrapper')])[1]//div[contains(@class,'VersionRow__InnerCell')][8]//button")
+    VIDEO_THUMBNAIL = Target.the('Video Thumbnail').located_by("[class^='SelectableVideo__Thumbnail']")
+    METADATA_LOCALE_DROPDOWN = Target.the('Metadata Locale Dropdown').located_by("//span[text()='Select locale']/..")
+    YOUTUBE_CHANNELS_DROPDOWN = Target.the('YouTube Channels Dropdown').located_by("//span[text()='Select locale']/..")
     SEARCH_INPUT = Target.the('Search Input In Dropdown List').located_by("input[placeholder='Search']")
 
     # Publish Videos Confirmation Modal
@@ -33,4 +34,28 @@ class YoutubePublishPage(BasePage):
         return Target.the(f'Version Row With File Name "{file_name}"').located_by(
             f"//*[contains(@class,'VersionRow__FieldValue') and contains(text(), '{file_name}')]"
             f"/ancestor::div[contains(@class, 'VersionRow__RowWrapper')]"
+        )
+
+    @staticmethod
+    def get_metadata_locale_button_by_file_name(file_name: str) -> Target:
+        return Target.the(f'Button to Select Locale Of File Name "{file_name}"').located_by(
+            f"//div[text()='{file_name}']/../..//../div[contains(@class,'VersionRow__InnerCell')][7]//button"
+        )
+
+    @staticmethod
+    def get_metadata_locale_value_selected(file_name: str, value: str) -> Target:
+        return Target.the(f'Selected Locale Value Of File Name "{file_name}"').located_by(
+            f"//div[text()='{file_name}']/../..//../div[contains(@class,'VersionRow__InnerCell')][7]//span[text()='{value}']"
+        )
+
+    @staticmethod
+    def get_youtube_channels_button_by_file_name(file_name: str) -> Target:
+        return Target.the(f'Button to Select YouTube Channel Of File Name "{file_name}"').located_by(
+            f"//div[text()='{file_name}']/../..//../div[contains(@class,'VersionRow__InnerCell')][8]//button"
+        )
+
+    @staticmethod
+    def get_youtube_channels_value_selected(file_name: str, value: str) -> Target:
+        return Target.the(f'Selected YouTube Channel Value Of File Name "{file_name}"').located_by(
+            f"//div[text()='{file_name}']/../..//../div[contains(@class,'VersionRow__InnerCell')][8]//span[text()='{value}']"
         )

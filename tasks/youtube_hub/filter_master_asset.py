@@ -2,7 +2,6 @@ from enum import Enum
 
 from screenpy import Actor
 from screenpy.pacing import beat
-from screenpy_selenium.actions import Click
 
 from actions import WaitClick
 from ui import YoutubeHubPage

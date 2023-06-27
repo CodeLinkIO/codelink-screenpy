@@ -1,8 +1,7 @@
 from screenpy import Actor
-from screenpy.pacing import beat
 from screenpy_selenium.actions import Click, Wait, Enter
 
-from actions import WaitEnter, WaitClick
+from actions import WaitClick
 from ui import YoutubeHubPage
 
 

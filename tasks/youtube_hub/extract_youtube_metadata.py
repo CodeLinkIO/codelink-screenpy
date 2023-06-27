@@ -2,7 +2,7 @@ from screenpy import Actor
 from screenpy.pacing import beat
 from screenpy_selenium.actions import Click, Wait
 
-from actions import WaitClick, WaitEnter
+from actions import WaitEnter
 from ui import YoutubeHubPage
 
 
@@ -14,7 +14,7 @@ class ExtractYouTubeMetadata:
     ):
         self.video_id = video_id
 
-    @beat("{} extract YouTube metadata.")
+    @beat("{} extracts YouTube metadata.")
     def perform_as(self, the_actor: Actor) -> None:
         the_actor.attempts_to(
             WaitEnter(YoutubeHubPage.EXTRACT_YOUTUBE_METADATA_DIALOG_YOUTUBE_ID_INPUT, self.video_id),

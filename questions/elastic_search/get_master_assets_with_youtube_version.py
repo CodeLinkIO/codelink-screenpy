@@ -72,15 +72,13 @@ class GetMasterAssetsWithYouTubeVersion:
             path: str,
             username: str,
             password: str,
-            game_id: str,
-            sorted_by: MasterAssetTableAttribute = None
+            game_id: str
     ):
         self.path = path
         self.username = username
         self.password = password
         self.game_id = game_id
         self.uuids = []
-        self.sorted_by = sorted_by
 
     def get_parent_ids_version_assets_with_youtube_channel(self, the_actor: Actor) -> list:
         resp = NuxeoEsSearch(
@@ -112,6 +110,4 @@ class GetMasterAssetsWithYouTubeVersion:
     def answered_by(self, the_actor: Actor):
         parent_ids = self.get_parent_ids_version_assets_with_youtube_channel(the_actor)
         master_assets_with_youtube_version = self.get_master_assets_info(parent_ids, the_actor)
-        if self.sorted_by:
-            return sorted(master_assets_with_youtube_version, key=lambda d: d[self.sorted_by])
         return master_assets_with_youtube_version

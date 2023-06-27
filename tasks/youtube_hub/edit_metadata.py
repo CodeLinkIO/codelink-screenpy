@@ -2,10 +2,8 @@ import time
 
 from screenpy import Actor
 from screenpy.pacing import beat
-from screenpy_selenium.abilities import BrowseTheWeb
 from screenpy_selenium.actions import Click, Wait, Enter
 from selenium.webdriver import Keys
-from selenium.webdriver.common.by import By
 
 from actions import WaitClick
 from ui import MetadataEditPage
@@ -81,7 +79,7 @@ class EditMetadata(BaseTasks):
             time.sleep(0.5)
         raise TimeoutError(f"Validate button is not enabled after waiting {timeout} seconds.")
 
-    @beat("{} edit metadata.")
+    @beat("{} edits metadata.")
     def perform_as(self, the_actor: Actor) -> None:
         the_actor.attempts_to(
             WaitClick(MetadataEditPage.METADATA_CAPTURE_TAB)

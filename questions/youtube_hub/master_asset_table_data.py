@@ -1,5 +1,4 @@
 import typing
-import logging
 
 from screenpy import Actor
 from screenpy.pacing import beat
@@ -17,13 +16,11 @@ class MasterAssetTableData(BaseQuestions):
 
     def __init__(
             self,
-            data: typing.List[MasterAssetTableAttribute] = None,
-            sorted_by: MasterAssetTableAttribute = None
-    ) -> None:
+            data: typing.List[MasterAssetTableAttribute] = None
+    ):
         if data is None:
             data = [MasterAssetTableAttribute.MASTER_NAME, MasterAssetTableAttribute.VOLTRON_ID]
         self.data = data
-        self.sorted_by = sorted_by
 
     MASTER_ASSET_TABLE_ROW_DATA_LOCATORS_MAPPING = {
         MasterAssetTableAttribute.BEAT: YoutubeHubPage.MASTER_ASSET_TABLE_BEAT,
@@ -44,7 +41,7 @@ class MasterAssetTableData(BaseQuestions):
             data.append(actions_in_a_row)
         return data
 
-    def get_voltron_id(self, row: WebElement, the_actor: Actor):
+    def get_voltron_id(self, row: WebElement):
         text = row.find_element(
             *self.MASTER_ASSET_TABLE_ROW_DATA_LOCATORS_MAPPING.get(
                 MasterAssetTableAttribute.VOLTRON_ID).locator
@@ -65,7 +62,7 @@ class MasterAssetTableData(BaseQuestions):
                 )
             elif item == MasterAssetTableAttribute.VOLTRON_ID:
                 row_data.append(
-                    self.get_voltron_id(row, the_actor)
+                    self.get_voltron_id(row)
                 )
             else:
                 row_data.append(
@@ -73,8 +70,8 @@ class MasterAssetTableData(BaseQuestions):
                 )
         return dict(zip(self.data, row_data))
 
-    @beat('{} examines the data on Master Asset Table')
-    def answered_by(self, the_actor: Actor):
+    @beat('{} examines the data on Master Asset table.')
+    def answered_by(self, the_actor: Actor) -> typing.List[dict]:
         data = []
         driver = the_actor.ability_to(BrowseTheWeb).browser
         bottom_reached = False
@@ -94,6 +91,4 @@ class MasterAssetTableData(BaseQuestions):
             except TargetingError:
                 bottom_reached = True
             i += 1
-        if self.sorted_by:
-            return sorted(data, key=lambda d: d[self.sorted_by])
         return data
