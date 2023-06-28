@@ -12,6 +12,15 @@ Automation Project with screenpy and allure.
 ### Project Setup
 * Install python 3.10
 * Install allure commandline
+```
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+```
+irm get.scoop.sh | iex
+```
+```
+scoop install allure
+```
 * Clone this repo to your local machine
 * Open the project
 * Open terminal on IDE at project folder
@@ -31,6 +40,29 @@ py -m venv venv
 ```
 pip install -r requirements.txt
 ```
+### Running tests
+* Run tests in a directory
+```
+pytest <path to test>
+```
+* Run tests by keyword expressions
+```
+pytest -k "keywork or test case name"
+```
+Example:
+```
+pytest --alluredir report  --window-size 1920,950  -k test_youtube_hub
+```
+
+### Generating report
+```
+allure serve <path of report>
+```
+Example:
+```
+allure serve report
+```
+
 ### Links
 [Pytest](https://docs.pytest.org/en/7.2.x/contents.html) 
 
