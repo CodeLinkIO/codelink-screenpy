@@ -1,3 +1,4 @@
+import pytest
 import uuid
 
 from screenpy import AnActor, given, when, then
@@ -6,6 +7,7 @@ from screenpy.directions import noted_under
 from screenpy.resolutions import ReadsExactly, IsEqual
 from screenpy_selenium.actions import Open
 
+from enums import TestLevels
 from libraries.api_client.routes import Routes
 from tasks import Login, CloseToastMessage
 from tasks.asset_list_game import AddBeat, EditBeat, ExpandTitle, FavouriteFranchise, FavouriteTitle, Filter, FilterType, SetDefaultLocales, Search
@@ -16,6 +18,7 @@ from features.base_test import BaseTest
 
 class TestFilterSearchFavoriteAndAddBeatInAssetTrackerGame(BaseTest):
 
+    @pytest.mark.level(TestLevels.REGRESSION)
     def test_filter_search_favourite_and_add_beat(self, the_qa_engineer_2: AnActor):
         given(the_qa_engineer_2).was_able_to(
             Open.their_browser_on(self.pages['ASSET_LIST_GAME_PAGE'].url),
