@@ -1,9 +1,9 @@
 import typing
-from retry import retry
 
+from retry import retry
 from screenpy import Actor
-from screenpy_selenium import Target
 from screenpy.pacing import beat
+from screenpy_selenium import Target
 from selenium.common import StaleElementReferenceException
 
 from ui.asset_list_game import AssetListGamePage

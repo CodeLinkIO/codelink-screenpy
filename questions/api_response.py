@@ -1,10 +1,10 @@
 import gzip
 import io
 import json
+import logging
 
 from screenpy import Actor
 from screenpy.pacing import beat
-
 from screenpy_selenium.abilities import BrowseTheWeb
 
 
@@ -20,4 +20,6 @@ class ApiResponse:
         request = driver.wait_for_request(self.path, self.timeout)
         buf = io.BytesIO(request.response.body)
         gzip_f = gzip.GzipFile(fileobj=buf)
-        return json.loads(gzip_f.read().decode("utf-8"))
+        resp = json.loads(gzip_f.read().decode("utf-8"))
+        logging.info(f"Response: {resp}")
+        return resp

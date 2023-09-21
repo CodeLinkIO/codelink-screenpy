@@ -1,6 +1,6 @@
 import time
-from retry import retry
 
+from retry import retry
 from screenpy import Actor
 from screenpy.pacing import beat
 from selenium.common import StaleElementReferenceException

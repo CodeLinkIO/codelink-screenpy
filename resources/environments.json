@@ -9,6 +9,7 @@
     "photo_shoot_library": "https://codelink-shoot.dev.voltron.ea.com/",
     "channel_ready_library": "https://codelink-channelready.dev.voltron.ea.com/",
     "login": "https://codelink-core.dev.voltron.ea.com/nuxeo/login.jsp",
+    "core": "https://codelink-core.dev.voltron.ea.com",
     "paths": {
       "access_denied": "access-denied"
     }
