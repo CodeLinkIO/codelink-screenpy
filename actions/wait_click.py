@@ -8,13 +8,15 @@ from actions.base_actions import BaseActions
 
 class WaitClick(BaseActions):
 
-    def __init__(self, target: Target):
+    def __init__(self, target: Target, timeout: int = None):
         self.target = target
+        self.timeout = timeout or self.DEFAULT_TIMEOUT
 
     @beat("{} waits and clicks on the {target}.")
     def perform_as(self, the_actor: Actor) -> None:
         self.wait_for_target_to_perform_action(
             the_actor,
             self.target,
-            Click.on_the(self.target)
+            Click.on_the(self.target),
+            self.timeout
         )

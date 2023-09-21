@@ -14,16 +14,18 @@ class CallAnApi:
     def __init__(
             self,
             the_actor: Actor,
-            base_url: str = None
+            base_url: str = None,
+            **headers
     ):
         self.the_actor = the_actor
         self.base_url = base_url
-        self.api = ApiClient(the_actor, base_url)
+        self.api = ApiClient(the_actor, base_url, **headers)
 
     @staticmethod
     def using(
             the_actor: Actor,
-            base_url: str = None
+            base_url: str = None,
+            **headers
     ) -> "ApiClient":
         """Provide an API Client to use to work with APIs."""
-        return ApiClient(the_actor, base_url)
+        return ApiClient(the_actor, base_url, **headers)

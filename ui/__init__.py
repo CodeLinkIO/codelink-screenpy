@@ -8,6 +8,8 @@ from .juno_hub import JunoHubPage
 from .login import LoginPage
 from .photo_shoot_library import PhotoShootLibraryPage
 from .youtube_hub import YoutubeHubPage
+from .metadata_edit import MetadataEditPage
+from .youtube_publish import YoutubePublishPage
 
 __all__ = [
     "AssetListGamePage",
@@ -20,4 +22,6 @@ __all__ = [
     "LoginPage",
     "PhotoShootLibraryPage",
     "YoutubeHubPage",
+    "MetadataEditPage",
+    "YoutubePublishPage",
 ]
