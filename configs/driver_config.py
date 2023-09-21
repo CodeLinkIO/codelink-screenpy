@@ -3,11 +3,6 @@ from pytest import fixture
 from configs.supported_browsers.browsers import Browser, Chrome, Edge, Firefox
 
 
-@fixture
-def driver(request):
-    yield initiate_driver(request)
-
-
 @fixture(scope='class')
 def driver(request):
     yield initiate_driver(request)
