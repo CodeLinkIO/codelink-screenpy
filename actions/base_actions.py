@@ -12,9 +12,10 @@ class BaseActions:
             self,
             the_actor: Actor,
             target: Target,
-            action: Performable
+            action: Performable,
+            timeout: int
     ) -> None:
         the_actor.attempts_to(
-            Wait(self.DEFAULT_TIMEOUT).second_for_the(target),
+            Wait(timeout).second_for_the(target),
             action
         )

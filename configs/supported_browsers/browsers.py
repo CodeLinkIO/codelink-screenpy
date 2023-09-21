@@ -35,6 +35,9 @@ class Chrome(Browser):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument(f'--window-size={window_size}')
         chrome_options.headless = headless
+        chrome_options.add_experimental_option(
+            "prefs", {"profile.content_settings.exceptions.clipboard": {'*': {'setting': 1}}}
+        )
 
         selenium_wire_options = {
             'enable_har': enable_har  # Capture HAR data, retrieve with driver.har
