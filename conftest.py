@@ -1,7 +1,7 @@
 from pytest import fixture
 from screenpy.pacing import the_narrator
 from screenpy_adapter_allure import AllureAdapter
-from screenpy.narration.adapters.stdout_adapter import StdOutAdapter
+from screenpy.narration import StdOutAdapter
 
 from globals.constants import ENVIRONMENTS_FILE_PATH
 from utils.json_reader import read_file
